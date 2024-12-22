@@ -4,17 +4,9 @@ on:
   push:
     branches:
       - main
-    # paths:
-    #   - './api/**'
-    #   - './worker/**'
-    #   - 'docker-compose-server.yaml'
   pull_request:
     branches:
       - main
-    # paths:
-    #   - './api/**'
-    #   - './worker/**'
-    #   - 'docker-compose-server.yaml'
 
 jobs:
   build:
