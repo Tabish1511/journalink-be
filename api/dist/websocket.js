@@ -12,11 +12,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.wss = void 0;
 const ws_1 = require("ws");
 const index_1 = require("./index");
+const redis_1 = require("redis");
+const client = (0, redis_1.createClient)();
+client.on('error', (err) => console.log('Redis Client Error', err));
 const wss = new ws_1.WebSocketServer({ server: index_1.httpServer, path: '/api/v1/chatWs' });
 exports.wss = wss;
 wss.on('connection', function connection(ws) {
     ws.on('message', function message(data, isBinary) {
         return __awaiter(this, void 0, void 0, function* () {
+            try {
+                client.lPush('newMessages', data.toString()); // << One way to make the delivery faster
+                console.log('Message saved to Redis');
+            }
+            catch (e) {
+                console.error('Error saving message to redis:', e);
+            }
             wss.clients.forEach(function each(client) {
                 if (client.readyState === 1) {
                     client.send(data, { binary: isBinary });
@@ -25,3 +35,15 @@ wss.on('connection', function connection(ws) {
         });
     });
 });
+function startServer() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            yield client.connect();
+            console.log('Connected to Redis from websocket server');
+        }
+        catch (e) {
+            console.log('Error connecting to Redis:', e);
+        }
+    });
+}
+startServer();
