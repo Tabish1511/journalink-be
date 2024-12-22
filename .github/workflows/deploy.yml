@@ -5,8 +5,8 @@ on:
     branches:
       - main
     paths:
-      - './api/**'
-      - './worker/**'
+      - 'api/**'
+      - 'worker/**'
       - 'docker-compose-server.yaml'
 
 jobs:
