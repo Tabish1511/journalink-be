@@ -25,7 +25,7 @@ async function startWorker() {
       try {
           const messageData = await client.brPop("newMessages", 0);
           if (messageData?.element) {
-              console.log("The message received by redis: ", messageData.element);
+              console.log("The message received by redis (MESSAGEDATA ONLY, NOT MESSAGEDATA.ELEMENT): ", messageData);
               console.log('Message processed in BG WORKER');
           } else {
               console.log('NO MESSAGE IN BG WORKER');

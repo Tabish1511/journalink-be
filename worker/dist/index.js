@@ -10,7 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const redis_1 = require("redis");
-const client = (0, redis_1.createClient)();
+// const client = createClient();
+const client = (0, redis_1.createClient)({
+    url: 'redis://journalink-redis:6379'
+});
+client.on('error', (err) => console.log('Redis Client Error', err));
 function startWorker() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -29,7 +33,7 @@ function startWorker() {
             try {
                 const messageData = yield client.brPop("newMessages", 0);
                 if (messageData === null || messageData === void 0 ? void 0 : messageData.element) {
-                    console.log("The message received by redis: ", messageData.element);
+                    console.log("The message received by redis (MESSAGEDATA ONLY, NOT MESSAGEDATA.ELEMENT): ", messageData);
                     console.log('Message processed in BG WORKER');
                 }
                 else {

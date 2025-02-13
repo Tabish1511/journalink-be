@@ -19,7 +19,7 @@ wss.on('connection', function connection(ws) {
 
     try{
       client.lPush('newMessages', data.toString());   // << One way to make the delivery faster
-      console.log('Message saved to Redis');
+      console.log('Message saved to Redis (api/src/websockets.ts:)', data.toString());
     }catch(e){
       console.error('Error saving message to redis:', e);
     }

@@ -2,14 +2,6 @@ import express from "express";
 import userRouter from './routes/user';
 import messageRouter from './routes/message';
 
-// Check if build workflow running
-// Check if build workflow running
-// Check if build workflow running
-// Check if build workflow running
-// Check if build workflow running
-// Check if build workflow running
-// Check if build workflow running
-
 const app = express();
 app.use(express.json());
 
